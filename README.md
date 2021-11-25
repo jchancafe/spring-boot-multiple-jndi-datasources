@@ -16,20 +16,30 @@ These instructions will get you a copy of the project up and running on your loc
 * Create 2 databases called `'user'`, `'booking'` which we will connect to both of them using jndi datasources.
 * For creating jndi datasource in tomcat server go to *`TomcatHomeDirectory/conf`* folder.
 * Add below code in the server *`server.xml`* file. The code should be added in the *`GlobalNamingResources`* element:
-
-`
-<Resource name="jdbc/userJNDI" 
-      global="jdbc/userJNDI" 
-      auth="Container" 
-      type="javax.sql.DataSource" 
-      driverClassName="com.mysql.cj.jdbc.Driver" 
-      url="jdbc:mysql://localhost:3306/user" 
-      username="root" 
-      password="root" 
-      maxActive="100" 
-      maxIdle="20" 
-      minIdle="5" 
-      maxWait="10000"/>
+      
+<Resource 
+        name="jdbc/userJNDI" 
+        global="jdbc/userJNDI"
+        auth="Container" 
+        factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+        testWhileIdle="true"
+        testOnReturn="false"
+        timeBetweenEvictionRunsMillis="30000"
+        minIdle="5"
+        removeAbandonedTimeout="60"
+        removeAbandoned="false"
+        logAbandoned="true"
+        minEvictableIdleTimeMillis="30000"
+        jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
+        type="javax.sql.DataSource" 
+        url="jdbc:mysql://localhost:3306/user" 
+        driverClassName="com.mysql.cj.jdbc.Driver" 
+        maxActive="100" maxIdle="50" 
+        maxWait="-1" 
+        password="root" 
+        testOnBorrow="true" 
+        username="root" 
+        validationQuery="select 1 from dual"/>
 ` 
 * There should be another *`Resource`* element for the booking database the same as the code above with changing the *`name, global, url`* attributes.
 * Add below code in the server *`context.xml`* file:
