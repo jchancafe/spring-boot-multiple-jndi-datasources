@@ -16,7 +16,12 @@ These instructions will get you a copy of the project up and running on your loc
 * Create 2 databases called `'user'`, `'booking'` which we will connect to both of them using jndi datasources.
 * For creating jndi datasource in tomcat server go to *`TomcatHomeDirectory/conf`* folder.
 * Add below code in the server *`server.xml`* file. The code should be added in the *`GlobalNamingResources`* element:
-      
+
+### Referencia
+http://forum.broadleafcommerce.org/viewtopic.php?t=24429
+https://tomcat.apache.org/tomcat-8.0-doc/jdbc-pool.html
+
+
 <Resource 
         name="jdbc/userJNDI" 
         global="jdbc/userJNDI"
